@@ -1,3 +1,6 @@
+const FileManager = require('../util/FileManager');
+const { Producto } = require('../modelo/Producto');
+
 class ProductoService {
     constructor() {
         this.fileManager = new FileManager();
@@ -139,4 +142,4 @@ class ProductoService {
     }
 }
 
-module.exports = { Producto, ProductoService };
+module.exports = { ProductoService };

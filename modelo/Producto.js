@@ -19,3 +19,5 @@ class Producto {
                this.cantidad >= 0;
     }
 }
+
+module.exports = { Producto };

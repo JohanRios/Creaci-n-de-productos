@@ -67,14 +67,28 @@ class Main {
     }
 
     async actualizarProducto() {
-        const id = parseInt(await this.preguntarValor("ID del producto a actualizar:"));
-        const campo = await this.preguntarValor("Campo a modificar (nombre, precio, cantidad):");
-        const valor = await this.preguntarValor("Nuevo valor:");
-        const actualizado = this.servicio.actualizar(id, {
-            [campo]: campo === "precio" || campo === "cantidad" ? Number(valor) : valor
-        });
-        console.log(actualizado ? "Producto actualizado." : "Producto no encontrado.");
+    const id = parseInt(await this.preguntarValor("ID del producto a actualizar:"));
+    const campo = await this.preguntarValor("Campo a modificar (nombre, descripcion, precio, cantidad):");
+
+    // Validar que el campo sea uno de los permitidos
+    const camposValidos = ["nombre", "descripcion", "precio", "cantidad"];
+    if (!camposValidos.includes(campo.toLowerCase())) {
+        console.log("Campo inválido. Solo se permite nombre, descripcion, precio o cantidad.");
+        return;
     }
+
+    const valor = await this.preguntarValor("Nuevo valor:");
+
+    // Convertir a número si es precio o cantidad
+    const valorProcesado = (campo === "precio" || campo === "cantidad") ? Number(valor) : valor;
+
+    const actualizado = this.servicio.actualizar(id, {
+        [campo]: valorProcesado
+    });
+
+    console.log(actualizado ? "Producto actualizado." : "Producto no encontrado.");
+}
+
 
     async eliminarProducto() {
         const id = parseInt(await this.preguntarValor("ID del producto a eliminar:"));
